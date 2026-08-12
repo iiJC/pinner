@@ -1,26 +1,81 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { router } from "expo-router";
 import MapView, { Marker } from "react-native-maps";
 
-import { locations } from "../data/locations";
+import { supabase } from "../lib/supabase";
+
+type MapLocation = {
+  id: number;
+  title: string;
+  description: string | null;
+  latitude: number;
+  longitude: number;
+  image_url: string | null;
+  collection_id: number | null;
+  collections: {
+    name: string;
+  }[];
+};
 
 export default function App() {
+  const [locations, setLocations] = useState<MapLocation[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCollection, setSelectedCollection] = useState("All");
+
+  useEffect(() => {
+    fetchLocations();
+  }, []);
+
+  const fetchLocations = async () => {
+    const { data, error } = await supabase.from("locations").select(`
+        id,
+        title,
+        description,
+        latitude,
+        longitude,
+        image_url,
+        collection_id,
+        collections (
+          name
+        )
+      `);
+
+    if (error) {
+      console.log("Error loading locations:", error);
+    } else {
+      setLocations((data ?? []) as MapLocation[]);
+    }
+
+    setLoading(false);
+  };
 
   const collections = [
     "All",
-    ...Array.from(new Set(locations.map((location) => location.collection)))
+    ...Array.from(
+      new Set(
+        locations
+          .map((location) => location.collections?.[0]?.name)
+          .filter((name): name is string => Boolean(name))
+      )
+    )
   ];
 
   const filteredLocations =
     selectedCollection === "All"
       ? locations
       : locations.filter(
-          (location) => location.collection === selectedCollection
+          (location) => location.collections?.[0]?.name === selectedCollection
         );
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>Loading locations...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -40,14 +95,16 @@ export default function App() {
               latitude: location.latitude,
               longitude: location.longitude
             }}
-            onPress={() =>
+            onPress={() => {
+              console.log("Opening location:", location.id);
+
               router.push({
                 pathname: "/location",
                 params: {
-                  id: location.id
+                  id: String(location.id)
                 }
-              })
-            }
+              });
+            }}
           />
         ))}
       </MapView>
@@ -85,6 +142,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   },
 
   map: {

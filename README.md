@@ -1,5 +1,7 @@
 # roadmap
 
+- jump to/recenter on current location
+
 - can mark off spots on a collection
 - can select multiple collections for a pin
   eg Shibuya Crossing - Your Name - Weathering with You
