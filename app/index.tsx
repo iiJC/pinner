@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Pressable, Text } from "react-native";
 
-import MapView, { Marker } from "react-native-maps";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+
 import { router } from "expo-router";
+import MapView, { Marker } from "react-native-maps";
 
 import { locations } from "../data/locations";
 
 export default function App() {
-  // This stores which collection the user currently selected.
   const [selectedCollection, setSelectedCollection] = useState("All");
 
-  // This decides which markers should actually appear.
+  const collections = [
+    "All",
+    ...Array.from(new Set(locations.map((location) => location.collection)))
+  ];
+
   const filteredLocations =
     selectedCollection === "All"
       ? locations
@@ -20,7 +24,6 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* MAP */}
       <MapView
         style={styles.map}
         initialRegion={{
@@ -49,63 +52,32 @@ export default function App() {
         ))}
       </MapView>
 
-      {/* FILTER BUTTONS */}
-      <View style={styles.filterContainer}>
-        <Pressable
-          style={[
-            styles.filterButton,
-            selectedCollection === "All" && styles.selectedFilterButton
-          ]}
-          onPress={() => setSelectedCollection("All")}
-        >
-          <Text
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.filterScroll}
+        contentContainerStyle={styles.filterContainer}
+      >
+        {collections.map((collection) => (
+          <Pressable
+            key={collection}
             style={[
-              styles.filterText,
-              selectedCollection === "All" && styles.selectedFilterText
+              styles.filterButton,
+              selectedCollection === collection && styles.selectedFilterButton
             ]}
+            onPress={() => setSelectedCollection(collection)}
           >
-            All
-          </Text>
-        </Pressable>
-
-        <Pressable
-          style={[
-            styles.filterButton,
-            selectedCollection === "Tokyo Movie Locations" &&
-              styles.selectedFilterButton
-          ]}
-          onPress={() => setSelectedCollection("Tokyo Movie Locations")}
-        >
-          <Text
-            style={[
-              styles.filterText,
-              selectedCollection === "Tokyo Movie Locations" &&
-                styles.selectedFilterText
-            ]}
-          >
-            Movie Locations
-          </Text>
-        </Pressable>
-
-        <Pressable
-          style={[
-            styles.filterButton,
-            selectedCollection === "Tokyo Landmarks" &&
-              styles.selectedFilterButton
-          ]}
-          onPress={() => setSelectedCollection("Tokyo Landmarks")}
-        >
-          <Text
-            style={[
-              styles.filterText,
-              selectedCollection === "Tokyo Landmarks" &&
-                styles.selectedFilterText
-            ]}
-          >
-            Landmarks
-          </Text>
-        </Pressable>
-      </View>
+            <Text
+              style={[
+                styles.filterText,
+                selectedCollection === collection && styles.selectedFilterText
+              ]}
+            >
+              {collection}
+            </Text>
+          </Pressable>
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -120,15 +92,18 @@ const styles = StyleSheet.create({
     height: "100%"
   },
 
-  filterContainer: {
+  filterScroll: {
     position: "absolute",
     top: 60,
-    left: 10,
-    right: 10,
-    zIndex: 10,
+    left: 0,
+    right: 0,
+    zIndex: 10
+  },
 
-    flexDirection: "row",
-    gap: 8
+  filterContainer: {
+    paddingHorizontal: 10,
+    gap: 8,
+    alignItems: "center"
   },
 
   filterButton: {
