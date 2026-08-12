@@ -45,3 +45,18 @@ panorama - user submits a 360 panarama of the spot to help others find the locat
 
 - leaderboards for submissions/contributors
   "a spot per day keeps the boredom at bay"
+
+- route optimizer?
+- quick extract/add from animepilgrimage info because no public api?
+
+## how it differs from competitors
+
+anime pilgrimage
+
+- easier way to view spots and mark them off?
+- supports multiple images of the same spot
+- con: no user submissions and "spots also nearby"
+
+wanderlog
+
+- more streamlined experience in terms of ability to separate and load pins

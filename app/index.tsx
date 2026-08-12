@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
+
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
+
 import MapView, { Marker } from "react-native-maps";
 
 import { supabase } from "../lib/supabase";
@@ -39,14 +41,22 @@ const getCollectionName = (collections: MapLocation["collections"]) => {
 
 export default function App() {
   const [locations, setLocations] = useState<MapLocation[]>([]);
+
   const [loading, setLoading] = useState(true);
+
   const [selectedCollection, setSelectedCollection] = useState("All");
 
-  useEffect(() => {
-    fetchLocations();
-  }, []);
+  // Runs every time this screen comes back into focus.
+  // This means newly-added locations appear automatically.
+  useFocusEffect(
+    useCallback(() => {
+      fetchLocations();
+    }, [])
+  );
 
   const fetchLocations = async () => {
+    console.log("Refreshing locations...");
+
     const { data, error } = await supabase.from("locations").select(`
         id,
         title,
@@ -63,12 +73,16 @@ export default function App() {
     if (error) {
       console.log("Error loading locations:", error);
     } else {
+      console.log("Locations loaded:", data);
+
       setLocations((data ?? []) as MapLocation[]);
     }
 
     setLoading(false);
   };
 
+  // Build collection filter buttons from
+  // the locations returned by Supabase.
   const collections = [
     "All",
     ...Array.from(
@@ -128,6 +142,7 @@ export default function App() {
         ))}
       </MapView>
 
+      {/* Collection filters */}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -139,6 +154,7 @@ export default function App() {
             key={collection}
             style={[
               styles.filterButton,
+
               selectedCollection === collection && styles.selectedFilterButton
             ]}
             onPress={() => setSelectedCollection(collection)}
@@ -146,6 +162,7 @@ export default function App() {
             <Text
               style={[
                 styles.filterText,
+
                 selectedCollection === collection && styles.selectedFilterText
               ]}
             >
@@ -154,6 +171,14 @@ export default function App() {
           </Pressable>
         ))}
       </ScrollView>
+
+      {/* Add Location button */}
+      <Pressable
+        style={styles.addButton}
+        onPress={() => router.push("/add-location")}
+      >
+        <Text style={styles.addButtonText}>+</Text>
+      </Pressable>
     </View>
   );
 }
@@ -206,5 +231,23 @@ const styles = StyleSheet.create({
 
   selectedFilterText: {
     color: "white"
+  },
+
+  addButton: {
+    position: "absolute",
+    right: 20,
+    bottom: 40,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: "#222",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  addButtonText: {
+    color: "white",
+    fontSize: 32,
+    lineHeight: 34
   }
 });
