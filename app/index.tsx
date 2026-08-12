@@ -13,10 +13,28 @@ type MapLocation = {
   latitude: number;
   longitude: number;
   image_url: string | null;
-  collection_id: number | null;
-  collections: {
-    name: string;
-  }[];
+  collection_id?: number | null;
+
+  collections:
+    | {
+        name: string;
+      }
+    | {
+        name: string;
+      }[]
+    | null;
+};
+
+const getCollectionName = (collections: MapLocation["collections"]) => {
+  if (!collections) {
+    return null;
+  }
+
+  if (Array.isArray(collections)) {
+    return collections[0]?.name ?? null;
+  }
+
+  return collections.name;
 };
 
 export default function App() {
@@ -56,7 +74,7 @@ export default function App() {
     ...Array.from(
       new Set(
         locations
-          .map((location) => location.collections?.[0]?.name)
+          .map((location) => getCollectionName(location.collections))
           .filter((name): name is string => Boolean(name))
       )
     )
@@ -66,7 +84,8 @@ export default function App() {
     selectedCollection === "All"
       ? locations
       : locations.filter(
-          (location) => location.collections?.[0]?.name === selectedCollection
+          (location) =>
+            getCollectionName(location.collections) === selectedCollection
         );
 
   if (loading) {

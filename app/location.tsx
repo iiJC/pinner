@@ -20,10 +20,40 @@ type MapLocation = {
   latitude: number;
   longitude: number;
   image_url: string | null;
+  collection_id?: number | null;
 
-  collections: {
-    name: string;
-  }[];
+  collections:
+    | {
+        name: string;
+      }
+    | {
+        name: string;
+      }[]
+    | null;
+};
+
+const getCollectionName = (collections: MapLocation["collections"]) => {
+  if (!collections) {
+    return null;
+  }
+
+  if (Array.isArray(collections)) {
+    return collections[0]?.name ?? null;
+  }
+
+  return collections.name;
+};
+
+const getImageUrl = (imagePath: string | null) => {
+  if (!imagePath) {
+    return null;
+  }
+
+  const { data } = supabase.storage
+    .from("location-images")
+    .getPublicUrl(imagePath);
+
+  return data.publicUrl;
 };
 
 export default function LocationScreen() {
@@ -115,15 +145,24 @@ export default function LocationScreen() {
     );
   }
 
+  const imageUrl = getImageUrl(location.image_url);
+
+  console.log("Generated image URL:", imageUrl);
+
   return (
     <View style={styles.container}>
-      {location.image_url ? (
+      {imageUrl ? (
         <Image
           source={{
-            uri: location.image_url
+            uri: imageUrl
           }}
           style={styles.image}
           resizeMode="cover"
+          onError={(event) => {
+            console.log("Image failed to load:", event.nativeEvent.error);
+
+            console.log("Failed image URL:", imageUrl);
+          }}
         />
       ) : (
         <View style={styles.imagePlaceholder}>
@@ -134,8 +173,10 @@ export default function LocationScreen() {
       <View style={styles.content}>
         <Text style={styles.title}>{location.title}</Text>
 
-        {location.collections?.[0]?.name && (
-          <Text style={styles.collection}>{location.collections[0].name}</Text>
+        {getCollectionName(location.collections) && (
+          <Text style={styles.collection}>
+            {getCollectionName(location.collections)}
+          </Text>
         )}
 
         <Text style={styles.description}>
