@@ -1,50 +1,45 @@
-# Welcome to your Expo app 👋
+# roadmap
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+- can mark off spots on a collection
+- can select multiple collections for a pin
+  eg Shibuya Crossing - Your Name - Weathering with You
+- "Today's adventure": add collections and pins to an itenerary session
+  eg ok we in Shinjuku
+  Lets add Your Name spots and anything else that comes up
+  Ok Code Geass shot
+  and let's also overlay the Suzume locations in the area
 
-## Get started
+replay - can give u a cute summary of your stats and session
+eg
+you tried to explore 40 locations, and took 33 photos from 32 spots
+thats a 80% completion rate!!! (27.6% higher than most!)
+you spent 4 hours trying to find them all! (2.1 hours faster than average!)
 
-1. Install dependencies
+shadow - can transparency fade in the example shot to help u line up the location
+panorama - user submits a 360 panarama of the spot to help others find the location
 
-   ```bash
-   npm install
-   ```
+- collections are ordered
+- collections can be marked off
+- multiple photos (and therefore collections and lowkey spots) for a pin
+  eg Shibuya crossing
+  Tokyo Drift 3
+  Suzume
+  Your Name
+  all have slightly different locations and shots for the same place
+  collate them nicely via collection label
+  eg
+  Tokyo Drift 3: requires entry into Starbucks - don't be rude!!
+  Suzume: Located on the lower observation deck
 
-2. Start the app
+- multiple locations for a pin (when the exact coords/spot is unknown)
+  - eg "Ashikaga" - Lily Chou-Chou
 
-   ```bash
-   npx expo start
-   ```
+- users can try to correct the location
+- users can veto photos/incorrect locations
+- users can submit photos for a pin
+- users can submit collections
+- pins have an "offical" tag, with date of image being taken
+- top user submitted spots/photos
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- leaderboards for submissions/contributors
+  "a spot per day keeps the boredom at bay"

@@ -25,14 +25,5 @@ export const locations = [
     longitude: 139.7454,
     image: require("../assets/images/locations/tokyo-tower.png"),
     collection: "Tokyo Landmarks"
-  },
-  {
-    id: "4",
-    title: "fake pin new",
-    description: "Test marker #4",
-    latitude: 36.6586,
-    longitude: 169.7454,
-    image: require("../assets/images/locations/tokyo-tower.png"),
-    collection: "Weathering With You Locations"
   }
 ];
