@@ -57,6 +57,9 @@ anime pilgrimage
 - supports multiple images of the same spot
 - con: no user submissions and "spots also nearby"
 
+- can rip the geodata and google street view and photo - possibly off the pin link?
+- but site is limited a bit in terms of images, scene lineup
+
 wanderlog
 
 - more streamlined experience in terms of ability to separate and load pins
