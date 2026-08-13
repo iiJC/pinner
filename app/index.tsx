@@ -172,12 +172,40 @@ export default function App() {
         ))}
       </ScrollView>
 
+      <Pressable
+        style={styles.addSceneButton}
+        onPress={() => router.push("/add-scene")}
+      >
+        <Text style={styles.addSceneButtonText}>+ Scene</Text>
+      </Pressable>
+
       {/* Add Location button */}
       <Pressable
         style={styles.addButton}
         onPress={() => router.push("/add-location")}
       >
         <Text style={styles.addButtonText}>+</Text>
+      </Pressable>
+
+      <Pressable
+        style={{
+          position: "absolute",
+          left: 20,
+          bottom: 40,
+          backgroundColor: "white",
+          padding: 14,
+          borderRadius: 20
+        }}
+        onPress={() =>
+          router.push({
+            pathname: "/collection",
+            params: {
+              id: "1"
+            }
+          })
+        }
+      >
+        <Text>Open Collection</Text>
       </Pressable>
     </View>
   );
@@ -249,5 +277,20 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 32,
     lineHeight: 34
+  },
+
+  addSceneButton: {
+    position: "absolute",
+    right: 20,
+    bottom: 115,
+    backgroundColor: "white",
+    paddingHorizontal: 18,
+    paddingVertical: 12,
+    borderRadius: 22
+  },
+
+  addSceneButtonText: {
+    fontWeight: "700",
+    color: "#222"
   }
 });
