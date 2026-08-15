@@ -55,6 +55,9 @@ anime pilgrimage
 
 - easier way to view spots and mark them off?
 - supports multiple images of the same spot
+- supports things which aren't anime spots
+- ordered itenerary so you can have pathing so ur not moving back and forth
+
 - con: no user submissions and "spots also nearby"
 
 - can rip the geodata and google street view and photo - possibly off the pin link?
@@ -62,4 +65,5 @@ anime pilgrimage
 
 wanderlog
 
-- more streamlined experience in terms of ability to separate and load pins
+- more streamlined experience in terms of ability to separate and load pins based off categories
+- optimized so doesn't take 5 minutes to load since you have 100 pins

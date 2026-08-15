@@ -178,13 +178,14 @@ export default function CollectionScreen() {
           return (
             <Pressable
               style={styles.card}
-              onPress={() =>
-                router.push({
-                  pathname: "/scene",
-                  params: {
-                    id: String(item.id)
-                  }
-                })
+onPress={() =>
+  router.push({
+    pathname: "/scene",
+    params: {
+      id: String(scene.id),
+    },
+  })
+}
               }
             >
               {imageUrl ? (

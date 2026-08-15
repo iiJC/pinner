@@ -57,18 +57,23 @@ export default function App() {
   const fetchLocations = async () => {
     console.log("Refreshing locations...");
 
-    const { data, error } = await supabase.from("locations").select(`
-        id,
-        title,
-        description,
-        latitude,
-        longitude,
-        image_url,
-        collection_id,
-        collections (
-          name
-        )
-      `);
+    const { data, error } = await supabase
+      .from("scenes")
+      .select(
+        `
+    id,
+    title,
+    latitude,
+    longitude,
+    location_status,
+    reference_image_path,
+    collections (
+      name
+    )
+  `
+      )
+      .not("latitude", "is", null)
+      .not("longitude", "is", null);
 
     if (error) {
       console.log("Error loading locations:", error);
