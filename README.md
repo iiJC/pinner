@@ -67,3 +67,9 @@ wanderlog
 
 - more streamlined experience in terms of ability to separate and load pins based off categories
 - optimized so doesn't take 5 minutes to load since you have 100 pins
+
+google maps / apple maps
+already integrates apple maps by default
+
+- having a dedicated itenerary
+- decluttered
