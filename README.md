@@ -49,6 +49,10 @@ panorama - user submits a 360 panarama of the spot to help others find the locat
 - route optimizer?
 - quick extract/add from animepilgrimage info because no public api?
 
+pick a random location
+city/ward completion
+pick an itenery to do
+
 ## how it differs from competitors
 
 anime pilgrimage
