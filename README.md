@@ -53,6 +53,9 @@ pick a random location
 city/ward completion
 pick an itenery to do
 
+add users to manage collections
+(so permissions and invites)
+
 ## how it differs from competitors
 
 anime pilgrimage
